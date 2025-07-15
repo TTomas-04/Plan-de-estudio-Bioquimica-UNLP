@@ -1,4 +1,3 @@
-// Clave única para esta malla
 const CLAVE_STORAGE = "estadoMallaBioquimica";
 
 const materias = [
@@ -26,8 +25,8 @@ const materias = [
   // TERCER AÑO - I SEMESTRE
   { id: "Ingles Científico Técnico", abre: [], requisitos: ["Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
   { id: "Química Orgánica II", abre: ["Bioquímica II"], requisitos: ["Química Orgánica I"], bloque: "tercer-1" },
-  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimentos"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
-  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimentos", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
+  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimento"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
+  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimento", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
 
   // TERCER AÑO - II SEMESTRE
   { id: "Bioquímica II", abre: ["Toxicología"], requisitos: ["Bioquímica I", "Química Orgánica II"], bloque: "tercer-2" },
@@ -36,13 +35,14 @@ const materias = [
 
   // CUARTO AÑO - I SEMESTRE
   { id: "Fisiología", abre: ["Toxicología", "Elementos de Farmacología", "Hematología", "Inmunología", "Bioquímica Patológica"], requisitos: ["Anatomía E Histología"], bloque: "cuarto-1" },
-  { id: "Diseño de Experimentos", abre: [], requisitos: ["Química Analítica Instrumental", "Bioquímica I"], bloque: "cuarto-1" },
+  { id: "Diseño de Experimento", abre: [], requisitos: ["Química Analítica Instrumental", "Bioquímica I"], bloque: "cuarto-1" },
   { id: "Bioquímica III", abre: ["Microbiología General", "Hematología", "Inmunología", "Bioquímica Patológica"], requisitos: ["Bioquímica I"], bloque: "cuarto-1" },
 
   // CUARTO AÑO - II SEMESTRE
   { id: "Toxicología", abre: [], requisitos: ["Bioquímica II", "Fisiología"], bloque: "cuarto-2" },
   { id: "Elementos de Farmacología", abre: [], requisitos: ["Fisiología"], bloque: "cuarto-2" },
   { id: "Microbiología General", abre: ["Inmunología", "Microbiología Clínica", "Micología", "Bromatología", "Virología Clínica"], requisitos: ["Bioquímica III"], bloque: "cuarto-2" },
+
   // QUINTO AÑO - I SEMESTRE
   { id: "Hematología", abre: ["Medio Interno", "Química Clínica", "Parasitología"], requisitos: ["Fisiología", "Bioquímica III"], bloque: "quinto-1" },
   { id: "Inmunología", abre: ["Micología", "Virología Clínica"], requisitos: ["Fisiología", "Bioquímica III", "Microbiología General"], bloque: "quinto-1" },
@@ -104,6 +104,7 @@ materias.forEach(materia => {
       estado[materia.id].aprobada = false;
       div.classList.remove("aprobada");
       bloquearDependientes(materia.id);
+      revisarDesbloqueos();
       localStorage.setItem(CLAVE_STORAGE, JSON.stringify(estado));
     } else {
       clickTimer = setTimeout(() => {
@@ -111,16 +112,7 @@ materias.forEach(materia => {
 
         estado[materia.id].aprobada = true;
         div.classList.add("aprobada");
-
-        materia.abre.forEach(destino => {
-          const desbloquear = materias.find(m => m.id === destino);
-          const requisitosCumplidos = desbloquear.requisitos.every(req => estado[req].aprobada);
-          if (requisitosCumplidos) {
-            estado[destino].bloqueada = false;
-            document.getElementById(destino).classList.remove("bloqueada");
-          }
-        });
-
+        revisarDesbloqueos();
         localStorage.setItem(CLAVE_STORAGE, JSON.stringify(estado));
       }, 400);
     }
@@ -144,5 +136,20 @@ function bloquearDependientes(id) {
     }
   });
 }
+
+function revisarDesbloqueos() {
+  materias.forEach(destino => {
+    if (estado[destino.id].aprobada) return;
+    if (!estado[destino.id].bloqueada) return;
+
+    const requisitosCumplidos = destino.requisitos.every(req => estado[req].aprobada);
+    if (requisitosCumplidos) {
+      estado[destino.id].bloqueada = false;
+      const el = document.getElementById(destino.id);
+      el.classList.remove("bloqueada");
+    }
+  });
+}
+
 
 
