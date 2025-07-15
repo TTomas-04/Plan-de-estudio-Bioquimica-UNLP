@@ -36,7 +36,7 @@ const materias = [
 
   // CUARTO AÑO - I SEMESTRE
   { id: "Fisiología", abre: ["Toxicología", "Elementos de Farmacología", "Hematología", "Inmunología", "Bioquímica Patológica"], requisitos: ["Anatomía E Histología"], bloque: "cuarto-1" },
-  { id: "Diseño de Experimento", abre: [], requisitos: ["Química Analítica Instrumental", "Bioquímica I"], bloque: "cuarto-1" },
+  { id: "Diseño de Experimentos", abre: [], requisitos: ["Química Analítica Instrumental", "Bioquímica I"], bloque: "cuarto-1" },
   { id: "Bioquímica III", abre: ["Microbiología General", "Hematología", "Inmunología", "Bioquímica Patológica"], requisitos: ["Bioquímica I"], bloque: "cuarto-1" },
 
   // CUARTO AÑO - II SEMESTRE
