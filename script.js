@@ -64,7 +64,7 @@ const materias = [
 ];
 
 const estado = {};
-const guardado = localStorage.getItem("estadoMalla");
+const guardado = localStorage.getItem(CLAVE_STORAGE);
 if (guardado) {
   const estadoGuardado = JSON.parse(guardado);
   materias.forEach(m => {
@@ -102,7 +102,7 @@ materias.forEach(materia => {
       estado[materia.id].aprobada = false;
       div.classList.remove("aprobada");
       bloquearDependientes(materia.id);
-      localStorage.setItem("estadoMalla", JSON.stringify(estado));
+      localStorage.setItem(CLAVE_STORAGE, JSON.stringify(estado));
     } else {
       clickTimer = setTimeout(() => {
         clickTimer = null;
@@ -119,7 +119,7 @@ materias.forEach(materia => {
           }
         });
 
-        localStorage.setItem("estadoMalla", JSON.stringify(estado));
+        localStorage.setItem(CLAVE_STORAGE, JSON.stringify(estado));
       }, 400);
     }
   });
