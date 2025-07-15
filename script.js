@@ -63,4 +63,6 @@ const materias = [
   { id: "Prácticas de Laboratorio Clínico", abre: [], requisitos: ["Endocrinología", "Bioquímica Patológica", "Parasitología", "Virología Clínica"], bloque: "sexto-2" }
 ];
 
-// MISMA LÓGICA DE CLICK, GUARDADO Y DOBLE CLICK:
+
+
+
