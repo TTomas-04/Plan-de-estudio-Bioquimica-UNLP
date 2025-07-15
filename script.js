@@ -26,8 +26,8 @@ const materias = [
   // TERCER AÑO - I SEMESTRE
   { id: "Ingles Científico Técnico", abre: [], requisitos: ["Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
   { id: "Química Orgánica II", abre: ["Bioquímica II"], requisitos: ["Química Orgánica I"], bloque: "tercer-1" },
-  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimento"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
-  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimento", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
+  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimentos"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
+  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimentos", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
 
   // TERCER AÑO - II SEMESTRE
   { id: "Bioquímica II", abre: ["Toxicología"], requisitos: ["Bioquímica I", "Química Orgánica II"], bloque: "tercer-2" },
