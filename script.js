@@ -1,3 +1,6 @@
+// Clave única para esta malla
+const CLAVE_STORAGE = "estadoMallaBioquimica";
+
 const materias = [
   // PRIMER AÑO - I SEMESTRE
   { id: "Algebra Calculo Numérico y Geometría Analítica", abre: ["Física I", "Análisis Matemático II", "Química General"], requisitos: [], bloque: "primer-1" },
@@ -23,8 +26,8 @@ const materias = [
   // TERCER AÑO - I SEMESTRE
   { id: "Ingles Científico Técnico", abre: [], requisitos: ["Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
   { id: "Química Orgánica II", abre: ["Bioquímica II"], requisitos: ["Química Orgánica I"], bloque: "tercer-1" },
-  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimentos"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
-  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimentos", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
+  { id: "Química Analítica Instrumental", abre: ["Biofisicoquimica", "Diseño de Experimento"], requisitos: ["Química Analítica I"], bloque: "tercer-1" },
+  { id: "Bioquímica I", abre: ["Bioquímica II", "Biofisicoquimica", "Diseño de Experimento", "Bioquímica III"], requisitos: ["Biología", "Fisicoquímica", "Química Orgánica I", "Química Analítica I"], bloque: "tercer-1" },
 
   // TERCER AÑO - II SEMESTRE
   { id: "Bioquímica II", abre: ["Toxicología"], requisitos: ["Bioquímica I", "Química Orgánica II"], bloque: "tercer-2" },
@@ -40,7 +43,6 @@ const materias = [
   { id: "Toxicología", abre: [], requisitos: ["Bioquímica II", "Fisiología"], bloque: "cuarto-2" },
   { id: "Elementos de Farmacología", abre: [], requisitos: ["Fisiología"], bloque: "cuarto-2" },
   { id: "Microbiología General", abre: ["Inmunología", "Microbiología Clínica", "Micología", "Bromatología", "Virología Clínica"], requisitos: ["Bioquímica III"], bloque: "cuarto-2" },
-
   // QUINTO AÑO - I SEMESTRE
   { id: "Hematología", abre: ["Medio Interno", "Química Clínica", "Parasitología"], requisitos: ["Fisiología", "Bioquímica III"], bloque: "quinto-1" },
   { id: "Inmunología", abre: ["Micología", "Virología Clínica"], requisitos: ["Fisiología", "Bioquímica III", "Microbiología General"], bloque: "quinto-1" },
