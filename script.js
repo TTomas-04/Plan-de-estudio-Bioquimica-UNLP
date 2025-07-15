@@ -63,6 +63,84 @@ const materias = [
   { id: "Prácticas de Laboratorio Clínico", abre: [], requisitos: ["Endocrinología", "Bioquímica Patológica", "Parasitología", "Virología Clínica"], bloque: "sexto-2" }
 ];
 
+const estado = {};
+const guardado = localStorage.getItem("estadoMalla");
+if (guardado) {
+  const estadoGuardado = JSON.parse(guardado);
+  materias.forEach(m => {
+    estado[m.id] = estadoGuardado[m.id] || {
+      aprobada: false,
+      bloqueada: m.requisitos.length > 0
+    };
+  });
+} else {
+  materias.forEach(m => {
+    estado[m.id] = {
+      aprobada: false,
+      bloqueada: m.requisitos.length > 0
+    };
+  });
+}
 
+materias.forEach(materia => {
+  const div = document.createElement("div");
+  div.className = "materia";
+  if (estado[materia.id].bloqueada) div.classList.add("bloqueada");
+  if (estado[materia.id].aprobada) div.classList.add("aprobada");
+  div.textContent = materia.id;
+  div.id = materia.id;
+
+  let clickTimer;
+
+  div.addEventListener("click", () => {
+    if (estado[materia.id].bloqueada && !estado[materia.id].aprobada) return;
+
+    if (clickTimer) {
+      clearTimeout(clickTimer);
+      clickTimer = null;
+
+      estado[materia.id].aprobada = false;
+      div.classList.remove("aprobada");
+      bloquearDependientes(materia.id);
+      localStorage.setItem("estadoMalla", JSON.stringify(estado));
+    } else {
+      clickTimer = setTimeout(() => {
+        clickTimer = null;
+
+        estado[materia.id].aprobada = true;
+        div.classList.add("aprobada");
+
+        materia.abre.forEach(destino => {
+          const desbloquear = materias.find(m => m.id === destino);
+          const requisitosCumplidos = desbloquear.requisitos.every(req => estado[req].aprobada);
+          if (requisitosCumplidos) {
+            estado[destino].bloqueada = false;
+            document.getElementById(destino).classList.remove("bloqueada");
+          }
+        });
+
+        localStorage.setItem("estadoMalla", JSON.stringify(estado));
+      }, 400);
+    }
+  });
+
+  document.getElementById(materia.bloque).appendChild(div);
+});
+
+function bloquearDependientes(id) {
+  materias.forEach(destino => {
+    if (destino.requisitos.includes(id)) {
+      const requisitosCumplidos = destino.requisitos.every(req => estado[req].aprobada);
+      if (!requisitosCumplidos) {
+        estado[destino.id].bloqueada = true;
+        estado[destino.id].aprobada = false;
+        const el = document.getElementById(destino.id);
+        el.classList.add("bloqueada");
+        el.classList.remove("aprobada");
+        bloquearDependientes(destino.id);
+      }
+    }
+  });
+}
 
 
